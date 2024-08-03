@@ -8,6 +8,8 @@ return {
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
+        gitsigns.toggle_current_line_blame() -- This line and below line (line number 12) both do the same thing. It will toggle current line blame on nvim start so we have to do that manually.
+        -- vim.cmd [[ :Gitsigns toggle_current_line_blame ]]
 
         local function map(mode, l, r, opts)
           opts = opts or {}
