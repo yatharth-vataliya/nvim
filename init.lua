@@ -753,12 +753,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-<<<<<<< HEAD
         local disable_filetypes = { c = true, cpp = true, blade = true, php = true }
-        local lsp_format_opt
-=======
-        local disable_filetypes = { c = true, cpp = true }
->>>>>>> d350db2449da40df003c40d440f909d74e2d4e70
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -767,13 +762,6 @@ require('lazy').setup({
             lsp_format = 'fallback',
           }
         end
-<<<<<<< HEAD
-        return {
-          timeout_ms = 5000,
-          lsp_format = lsp_format_opt,
-        }
-=======
->>>>>>> d350db2449da40df003c40d440f909d74e2d4e70
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
