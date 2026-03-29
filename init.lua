@@ -505,7 +505,6 @@ require('lazy').setup({
       },
       -- Maps LSP server names between nvim-lspconfig and Mason package names.
       'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
@@ -621,27 +620,6 @@ require('lazy').setup({
         -- ts_ls = {},
         --
         -- We are replacing DevSense with Intelephense for full, free capabilities
-        intelephense = {
-          filetypes = { 'php' },
-          -- root_dir = function(fname)
-          --   local util = require 'lspconfig.util'
-          --   return util.root_pattern('artisan', 'composer.json', '.git')(fname) or vim.fn.getcwd()
-          -- end,
-          settings = {
-            intelephense = {
-              -- These settings optimize Intelephense for Laravel
-              files = {
-                maxSize = 5000000,
-              },
-              -- environment = {
-              --   phpVersion = '8.4', -- Change to match your PHP version
-              -- },
-              telemetry = {
-                enabled = false,
-              },
-            },
-          },
-        },
 
         stylua = {}, -- Used to format Lua code
 
@@ -687,7 +665,7 @@ require('lazy').setup({
         -- You can add other tools here that you want Mason to install
       })
 
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-lspconfig').setup { ensure_installed = ensure_installed }
 
       for name, server in pairs(servers) do
         vim.lsp.config(name, server)
