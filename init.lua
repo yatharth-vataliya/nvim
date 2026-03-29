@@ -619,6 +619,29 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
+        --
+        -- We are replacing DevSense with Intelephense for full, free capabilities
+        intelephense = {
+          filetypes = { 'php' },
+          -- root_dir = function(fname)
+          --   local util = require 'lspconfig.util'
+          --   return util.root_pattern('artisan', 'composer.json', '.git')(fname) or vim.fn.getcwd()
+          -- end,
+          settings = {
+            intelephense = {
+              -- These settings optimize Intelephense for Laravel
+              files = {
+                maxSize = 5000000,
+              },
+              -- environment = {
+              --   phpVersion = '8.4', -- Change to match your PHP version
+              -- },
+              telemetry = {
+                enabled = false,
+              },
+            },
+          },
+        },
 
         stylua = {}, -- Used to format Lua code
 
