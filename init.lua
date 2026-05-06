@@ -619,7 +619,6 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-        -- We are replacing DevSense with Intelephense for full, free capabilities
 
         stylua = {}, -- Used to format Lua code
 
@@ -666,6 +665,40 @@ require('lazy').setup({
       })
 
       require('mason-lspconfig').setup { ensure_installed = ensure_installed }
+      -- ---------------------------------------------------------
+      -- Custom setup for DEVSENSE PHP Language Server
+      -- ---------------------------------------------------------
+      local lspconfig = require 'lspconfig'
+      local configs = require 'lspconfig.configs'
+
+      -- 1. Register the custom server definition
+      if not configs.devsense_php_ls then
+        configs.devsense_php_ls = {
+          default_config = {
+            cmd = { 'devsense-php-ls' },
+            filetypes = { 'php' },
+            -- Detects the root of your PHP project
+            root_dir = lspconfig.util.root_pattern('composer.json', '.git', '*.php'),
+            settings = {},
+          },
+        }
+      end
+
+      -- 2. Fetch autocomplete capabilities explicitly for blink.cmp
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local has_blink, blink = pcall(require, 'blink.cmp')
+      if has_blink then capabilities = blink.get_lsp_capabilities(capabilities) end
+
+      -- 3. Initialize the server
+      lspconfig.devsense_php_ls.setup {
+        capabilities = capabilities,
+
+        -- DEVSENSE operates on a freemium model.
+        -- Uncomment the block below if you purchased a premium license key:
+        -- init_options = {
+        --   ["0"] = "YOUR_LICENSE_KEY_OR_JSON"
+        -- }
+      }
 
       for name, server in pairs(servers) do
         vim.lsp.config(name, server)
